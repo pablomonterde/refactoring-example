@@ -31,6 +31,9 @@ public class RefactorNaming {
         value = value + u.getHappiness();
         // Actuliza la felicidad de la ciudad del usuario
         m.put(u.getCity(), value);
+        // Si un usario tiene una felicidad mayor que 100 se lanza una excepcion
+        if(value > 10000)
+        	throw new RuntimeException("City citizens are extremely happy.");
     }
 
     private Map<String, Integer> create() {

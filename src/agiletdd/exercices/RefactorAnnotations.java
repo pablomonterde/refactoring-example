@@ -9,7 +9,9 @@ import java.util.Map;
 
 public class RefactorAnnotations {
 
-    public Map refactor() {
+    private static final int MAX_CITY_HAPPINESS = 100000;
+
+	public Map refactor() {
         CitizenRepository citizenRepository = new CitizenRepository();
         Map<String, Integer> happinessByCity = InitializeCityHappiness(); // Inicializa la felicidad de las ciudades
         List<Citizen> allCitizens = citizenRepository.allCitizens(); // Recupera todos los ciudadanos
@@ -18,14 +20,18 @@ public class RefactorAnnotations {
          * Este bloque recorre todas los usuarios y actualiza la felicidad
          * de las ciudades en función de usus ciudadanos
          */
-        for (int index = 0; index < allCitizens.size(); index++) {
-            Citizen citizen = allCitizens.get(index); // Recuperamos un ciudadano
-            updateCityHappiness(citizen, happinessByCity); // Actualiza la felicidad de una ciudad
-        }
+        updateCitiesWithCitizenHappiness(happinessByCity, allCitizens);
 
         // Devuelve un mapa con las ciudades y la felicidad de sus ciudadanos
         return happinessByCity;
     }
+
+	private void updateCitiesWithCitizenHappiness(Map<String, Integer> happinessByCity, List<Citizen> allCitizens) {
+		for (int index = 0; index < allCitizens.size(); index++) {
+            Citizen citizen = allCitizens.get(index); // Recuperamos un ciudadano
+            updateCityHappiness(citizen, happinessByCity); // Actualiza la felicidad de una ciudad
+        }
+	}
 
     private void updateCityHappiness(Citizen citizen, Map<String, Integer> happinessByCity) {
         // Valor inicial de la felicidad de la ciudad del usuario
@@ -34,6 +40,9 @@ public class RefactorAnnotations {
         int newHappiness = initialHappiness + citizen.getHappiness();
         // Actuliza la felicidad de la ciudad del usuario
         happinessByCity.put(citizen.getCity(), newHappiness);
+       // Si un usario tiene una felicidad mayor que 100 se lanza una excepcion
+        if(newHappiness > MAX_CITY_HAPPINESS)
+        	throw new RuntimeException("City citizens are extremely happy.");
     }
 
     private Map<String, Integer> InitializeCityHappiness() {

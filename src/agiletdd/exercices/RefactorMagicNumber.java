@@ -7,5 +7,7 @@ public class RefactorMagicNumber {
 		return prize + (prize * 0.21f);
 		
 	}
+	
+
 
 }

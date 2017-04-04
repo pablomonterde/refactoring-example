@@ -40,7 +40,7 @@ public class RefactorAnnotations {
         int newHappiness = initialHappiness + citizen.getHappiness();
         // Actuliza la felicidad de la ciudad del usuario
         happinessByCity.put(citizen.getCity(), newHappiness);
-       // Si un usario tiene una felicidad mayor que 100 se lanza una excepcion
+        // Si un usario tiene una felicidad mayor que 100 se lanza una excepcion
         if(newHappiness > MAX_CITY_HAPPINESS)
         	throw new RuntimeException("City citizens are extremely happy.");
     }
